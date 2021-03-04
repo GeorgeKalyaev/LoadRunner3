@@ -36,11 +36,11 @@ Action()
 		"Name=login.x", "Value=59", ENDITEM, 
 		"Name=login.y", "Value=11", ENDITEM, 
 		LAST);
-
+  
 	lr_end_transaction("UC005_SelectingList_1_01Login",LR_AUTO);
 
 	lr_think_time(3);
-	
+	 
 	lr_start_transaction("UC005_SelectingList_1_02Flights");
 
 	web_url("Search Flights Button", 

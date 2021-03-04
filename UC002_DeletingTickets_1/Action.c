@@ -53,7 +53,7 @@ Action()
 		//EXTRARES,
 		//"URL=https://edge.microsoft.com/neededge/v1?bucket=29&customertype=1", ENDITEM,
 		LAST);
-	Check(status, tr_name);
+	Check(status, tr_name); 
 
 	web_set_sockets_option("SSL_VERSION", "AUTO");
 

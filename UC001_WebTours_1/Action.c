@@ -16,7 +16,7 @@ Action()
 	lr_start_transaction(tr_name = "UC001_WebTours_1_01Login"); // Логин
  	
 	Login();
-
+  
 	lr_end_transaction("UC001_WebTours_1_01Login",LR_AUTO);
 
 	lr_think_time(3);

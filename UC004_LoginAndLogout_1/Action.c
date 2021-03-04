@@ -42,7 +42,7 @@ Action()
 	lr_think_time(3);
 	
 	lr_start_transaction("UC005_LoginAndLogout_1_02Logout");
-
+ 
 	web_url("SignOff Button", 
 		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?signOff=1", 
 		"TargetFrame=body", 
