@@ -1,7 +1,7 @@
 [General]
 Type=Multi
 DefaultCfg=default.cfg
-ParameterFile=UC001_WebTours_1.prm
+ParameterFile=UC001_BuyTicket_1.prm
 GlobalParameterFile=
 NewFunctionHeader=1
 RunType=cci

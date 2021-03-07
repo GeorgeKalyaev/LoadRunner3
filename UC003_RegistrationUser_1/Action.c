@@ -1,8 +1,10 @@
 Action()
 {
-	lr_start_transaction(tr_main = "MAIN_UC003_RegistrationUser_1");
+	lr_start_transaction(tr_main = "MAIN_RegistrationUser_1");
 
-	lr_start_transaction(tr_name = "UC003_RegistrationUser_1_01OpenSite");
+	lr_start_transaction(tr_name = "OpenSite");
+	
+	web_reg_find("Text=Welcome to the Web Tours site.", LAST);
 
 	status = web_url("WebTours", 
 		"URL=http://192.168.26.1:1080/WebTours/", 
@@ -15,12 +17,14 @@ Action()
 		LAST);
 	Check(status, tr_name);
 
-	lr_end_transaction("UC003_RegistrationUser_1_01OpenSite",LR_AUTO);
+	lr_end_transaction("OpenSite",LR_AUTO);
 
 	lr_think_time(3);
 	
-	lr_start_transaction(tr_name = "UC003_RegistrationUser_1_02SignUpNow");
+	lr_start_transaction(tr_name = "Click_SignUpNow");
 
+	web_reg_find("Text=First time registering? Please complete the form below.", LAST);
+	
 	status = web_url("sign up now", 
 		"URL=http://192.168.26.1:1080/cgi-bin/login.pl?username=&password=&getInfo=true", 
 		"TargetFrame=body", 
@@ -34,11 +38,13 @@ Action()
 
 	web_set_sockets_option("SSL_VERSION", "AUTO");
 
-	lr_end_transaction("UC003_RegistrationUser_1_02SignUpNow",LR_AUTO);
+	lr_end_transaction("Click_SignUpNow",LR_AUTO);
 
-	lr_think_time(3);
+	lr_think_time(3); 
 
-	lr_start_transaction(tr_name = "UC003_RegistrationUser_1_03FillformContinue");
+	lr_start_transaction(tr_name = "Fillform_RegistrationUser");
+	
+	web_reg_find("Text=Thank you, <b>{rnd}</b>, for registering and welcome to the Web Tours family.", LAST);
 
 	status = web_submit_data("login.pl", 
 		"Action=http://192.168.26.1:1080/cgi-bin/login.pl", 
@@ -61,9 +67,9 @@ Action()
 		LAST);
 	Check(status, tr_name);
 
-	lr_end_transaction("UC003_RegistrationUser_1_03FillformContinue",LR_AUTO);
+	lr_end_transaction("Fillform_RegistrationUser",LR_AUTO);
 	
-	lr_end_transaction("MAIN_UC003_RegistrationUser_1",LR_AUTO);
+	lr_end_transaction("MAIN_RegistrationUser_1",LR_AUTO);
 
 	return 0;
 }

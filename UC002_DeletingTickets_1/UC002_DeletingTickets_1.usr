@@ -26,7 +26,6 @@ ScriptLocale=ru-RU
 [Actions]
 vuser_init=vuser_init.c
 Action=Action.c
-Extra=Extra.c
 vuser_end=vuser_end.c
 [RunLogicFiles]
 Default Profile=default.usp
@@ -39,30 +38,29 @@ globals.h=
 [Modified Actions]
 vuser_init=0
 Action=1
-Extra=1
 vuser_end=0
 [Recorded Actions]
 vuser_init=0
 Action=1
-Extra=0
 vuser_end=0
 [Replayed Actions]
 vuser_init=1
 Action=1
-Extra=1
 vuser_end=1
 [Interpreters]
 vuser_init=cci
 Action=cci
-Extra=cci
 vuser_end=cci
 [TransactionsOrder]
-Order="UC002_DeletingTickets_1_04Logout__*delimiter*___UC002_DeletingTickets_1_Relogin"
+Order="OpenSite__*delimiter*__Login__*delimiter*__Click_Itinerary__*delimiter*__Tickets_Remove__*delimiter*__Logout__*delimiter*__Logout"
 [StateManagement]
 LastReplayStatus=1
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1
 [Transactions]
-UC002_DeletingTickets_1_04Logout=
-_UC002_DeletingTickets_1_Relogin=
+OpenSite=
+Login=
+Click_Itinerary=
+Tickets_Remove=
+Logout=

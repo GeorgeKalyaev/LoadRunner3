@@ -1,18 +1,70 @@
 Action()
 {
-	lr_start_transaction(tr_main = "MAIN_UC002_DeletingTickets_1");
+	web_reg_save_param_regexp(
+	    "ParamName=userSession", 
+	    "RegExp=name=\"userSession\" value=\"([^\"]+)\"/>",
+	    "Ordinal=1",
+		LAST);
+	
+	web_reg_find("Text=Welcome to the Web Tours site.", LAST);
+	
+	lr_start_transaction("OpenSite");
 
-	lr_start_transaction(tr_name = "UC002_DeletingTickets_1_01Login"); // логин
-
-	Login();
-
-	lr_end_transaction("UC002_DeletingTickets_1_01Login",LR_AUTO);
+	web_url("WebTours", 
+		"URL=http://192.168.26.1:1080/WebTours/", 
+		"TargetFrame=", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=", 
+		"Snapshot=t1.inf", 
+		"Mode=HTML", 
+		LAST);
+ 
+	lr_end_transaction("OpenSite",LR_AUTO);
+	  
+	lr_think_time(3);
+	 
+	lr_start_transaction("Login"); 
+	
+	web_submit_data("login.pl", 
+		"Action=http://192.168.26.1:1080/cgi-bin/login.pl", 
+		"Method=POST", 
+		"TargetFrame=body", 
+		"RecContentType=text/html", 
+		"Referer=http://192.168.26.1:1080/cgi-bin/nav.pl?in=home", 
+		"Snapshot=t2.inf", 
+		"Mode=HTML", 
+		ITEMDATA, 
+		"Name=userSession", "Value={userSession}", ENDITEM, 
+		"Name=username", "Value={UserName}", ENDITEM, 
+		"Name=password", "Value={Password}", ENDITEM, 
+		"Name=JSFormSubmit", "Value=off", ENDITEM, 
+		"Name=login.x", "Value=50", ENDITEM, 
+		"Name=login.y", "Value=11", ENDITEM, 
+		LAST);
+  
+	lr_end_transaction("Login",LR_AUTO);
 
 	lr_think_time(3);
 
-	lr_start_transaction(tr_name = "UC002_DeletingTickets_1_02Itinerary"); // переход к билетам
+	lr_start_transaction("Click_Itinerary");
+	 
+	web_reg_find("Text=Invoice sent to:", "SaveCount=Tickets_Count", LAST);
+	
+		/*Correlation comment - Do not change!  Original value='860820-780-qq' Name ='flightID' Type ='ResponseBased'*/
+	web_reg_save_param_attrib(
+		"ParamName=flightID",
+		"TagName=input",
+		"Extract=value",
+		"Name=flightID",
+		"Type=hidden",
+		"NotFound=WARNING",
+		SEARCH_FILTERS,
+		"IgnoreRedirections=No",
+		"RequestUrl=*/itinerary.pl*",
+		LAST);
 
-	status = web_url("Itinerary Button", 
+	web_url("Itinerary Button", 
 		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?page=itinerary", 
 		"TargetFrame=body", 
 		"Resource=0", 
@@ -21,21 +73,16 @@ Action()
 		"Snapshot=t3.inf", 
 		"Mode=HTML", 
 		LAST);
-		Check(status, tr_name);
- 
-	lr_end_transaction("UC002_DeletingTickets_1_02Itinerary",LR_AUTO);
 
-	lr_think_time(3);
+	lr_end_transaction("Click_Itinerary",LR_AUTO);
+
+
+Tickets = atoi(lr_eval_string("{Tickets_Count}"));
+if (Tickets != 0){
 	
-	lr_start_transaction(tr_name = "UC002_DeletingTickets_1_03Deleting"); // Удаление всех билетов
-	/*web_add_cookie("SRCHUID=V=2&GUID=BAAA90DA4A15403E99F53067BF797C98&dmnchg=1; DOMAIN=edge.microsoft.com");
-	web_add_cookie("SRCHD=AF=NOFORM; DOMAIN=edge.microsoft.com");
-	web_add_cookie("_EDGE_V=1; DOMAIN=edge.microsoft.com");
-	web_add_cookie("MUID=3F0B04987E7F60B23C010B737F1461DB; DOMAIN=edge.microsoft.com");
-	web_add_cookie("SRCHUSR=DOB=20201013; DOMAIN=edge.microsoft.com");
-	web_add_cookie("SRCHHPGUSR=SRCHLANGV2=ru; DOMAIN=edge.microsoft.com");*/
-  
-	status = web_submit_data("itinerary.pl",
+	lr_start_transaction("Tickets_Remove");
+	
+	web_submit_data("itinerary.pl",
 		"Action=http://192.168.26.1:1080/cgi-bin/itinerary.pl",
 		"Method=POST",
 		"TargetFrame=",
@@ -44,28 +91,99 @@ Action()
 		"Snapshot=t4.inf",
 		"Mode=HTML",
 		ITEMDATA,
-		//"Name=flightID", "Value={flightID_1}", ENDITEM,
-		//"Name=flightID", "Value={flightID_2}", ENDITEM,
-		"Name=2", "Value=on", ENDITEM,
-		"Name=3", "Value=on", ENDITEM,
-		"Name=removeAllFlights.x", "Value=36", ENDITEM,
-		"Name=removeAllFlights.y", "Value=9", ENDITEM,
-		//EXTRARES,
-		//"URL=https://edge.microsoft.com/neededge/v1?bucket=29&customertype=1", ENDITEM,
+		"Name=1", "Value=on", ENDITEM,
+		"Name=flightID", "Value={flightID}", ENDITEM,
+		"Name=.cgifields", "Value=1", ENDITEM,
+		"Name=removeFlights.x", "Value=56", ENDITEM,
+		"Name=removeFlights.y", "Value=9", ENDITEM,
 		LAST);
-	Check(status, tr_name); 
-
-	web_set_sockets_option("SSL_VERSION", "AUTO");
-
-	lr_end_transaction("UC002_DeletingTickets_1_03Deleting",LR_AUTO);
-
+	
+	lr_end_transaction("Tickets_Remove",LR_AUTO);
+	 
 	lr_think_time(3);
+	
+	lr_start_transaction("Logout");
+	web_url("SignOff Button", 
+		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"TargetFrame=body", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://192.168.26.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Snapshot=t5.inf", 
+		"Mode=HTML", 
+		LAST);
+	lr_end_transaction("Logout",LR_AUTO);
+}
 
-	lr_start_transaction("UC002_DeletingTickets_1_04Logout"); // Выход
+else
+	
+{
+	lr_think_time(3);
+	
+    lr_start_transaction("Logout");
+	web_url("SignOff Button", 
+		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"TargetFrame=body", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://192.168.26.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Snapshot=t5.inf", 
+		"Mode=HTML", 
+		LAST);
+	lr_end_transaction("Logout",LR_AUTO);
+}
 
-	Logout();
- 
-	lr_end_transaction("UC002_DeletingTickets_1_04Logout",LR_AUTO);
-	lr_end_transaction("MAIN_UC002_DeletingTickets_1",LR_AUTO);
+
+// На заметку для себя
+// Можно было так, но если билетов не будет, то будет ошибка о том, что не может найти билеты (пока обойти не получилось) - нашел решение подставить: "NotFound=WARNING", предупреждение но скрипт не зафейлится
+
+	/*web_reg_save_param_ex(
+		"ParamName=Tikets_count",
+		"LB=type\=\"checkbox\" name=\"",
+		"RB=\"",
+		"Ordinal=all",
+		SEARCH_FILTERS,
+		LAST);
+
+	web_url("Itinerary Button", 
+		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?page=itinerary", 
+		"TargetFrame=body", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://192.168.26.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t3.inf", 
+		"Mode=HTML", 
+		LAST);*/
+	
+/*lr_save_int(i, "prmCounter");
+lr_output_message("String value of prmCounter: %s", lr_eval_string("{prmCounter}"));*/
+	
+/*
+if (strcmp(lr_eval_string("{Tikets_count}"),"0") == 0)
+ {
+    lr_start_transaction("exit");
+	web_url("welcome.pl", 
+		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"TargetFrame=", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://192.168.26.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Snapshot=t5.inf", 
+		"Mode=HTML", 
+		LAST);
+	lr_end_transaction("exit",LR_AUTO);
+ }
+else
+{
+	
+}*/
+
+/*
+ //web_reg_find("Text=No flights have been reserved.","Search=Body",  LAST);
+//<center><H3>No flights have been reserved.</H3></center>
+ */
+
+	
+
 	return 0;
 }

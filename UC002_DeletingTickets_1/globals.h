@@ -9,7 +9,5 @@
 
 //--------------------------------------------------------------------
 // Global Variables
-char *tr_main, *tr_name;
-int status;
-int time_elapsed;
+int Tickets;
 #endif // _GLOBALS_H

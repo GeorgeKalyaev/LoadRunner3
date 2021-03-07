@@ -9,7 +9,7 @@ Check(int status, char *tr_name)
 	if(status == LR_FAIL){
 		lr_error_message("Возникла ошибка");
 		lr_end_transaction(tr_name, LR_FAIL);
-		lr_end_transaction("MAIN_UC003_RegistrationUser_1", LR_FAIL);
+		lr_end_transaction("MAIN_RegistrationUser_1", LR_FAIL);
 		lr_exit(LR_EXIT_MAIN_ITERATION_AND_CONTINUE, LR_FAIL);
 	}
 	
