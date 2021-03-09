@@ -52,14 +52,14 @@ vuser_init=cci
 Action=cci
 vuser_end=cci
 [TransactionsOrder]
-Order="MAIN_SelectingList_1__*delimiter*__OpenSite__*delimiter*__Login__*delimiter*__Click_Flights__*delimiter*__Click_Itinerary__*delimiter*__Click_Home__*delimiter*__Logout"
+Order="05_MAIN_SelectingList__*delimiter*__OpenSite__*delimiter*__Login__*delimiter*__Click_Flights__*delimiter*__Click_Itinerary__*delimiter*__Click_Home__*delimiter*__Logout"
 [StateManagement]
 LastReplayStatus=1
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1
 [Transactions]
-MAIN_SelectingList_1=
+05_MAIN_SelectingList=
 OpenSite=
 Login=
 Click_Flights=

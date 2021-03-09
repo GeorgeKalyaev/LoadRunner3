@@ -11,7 +11,7 @@ Action()
  	lr_save_datetime("%m/%d/%Y", DATE_NOW + (ONE_DAY*randNumber) + (ONE_DAY*2), "returnD");
  	//lr_output_message("return date is %s", lr_eval_string("{returnD}"));
 	
- 	lr_start_transaction(tr_main = "MAIN_BuyTicket");
+ 	lr_start_transaction(tr_main = "01_MAIN_BuyTicket");
  	
 	web_reg_save_param_regexp(
 	    "ParamName=userSession", 
@@ -216,7 +216,7 @@ Action()
 	Logout();
 
 	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("MAIN_BuyTicket",LR_AUTO);
+	lr_end_transaction("01_MAIN_BuyTicket",LR_AUTO);
 	
 	return 0;
 }

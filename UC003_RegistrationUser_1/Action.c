@@ -1,6 +1,6 @@
 Action()
 {
-	lr_start_transaction(tr_main = "MAIN_RegistrationUser_1");
+	lr_start_transaction(tr_main = "03_MAIN_RegistrationUser");
 
 	lr_start_transaction(tr_name = "OpenSite");
 	
@@ -69,7 +69,7 @@ Action()
 
 	lr_end_transaction("Fillform_RegistrationUser",LR_AUTO);
 	
-	lr_end_transaction("MAIN_RegistrationUser_1",LR_AUTO);
+	lr_end_transaction("03_MAIN_RegistrationUser",LR_AUTO);
 
 	return 0;
 }

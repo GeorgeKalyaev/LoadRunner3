@@ -1,5 +1,8 @@
 Action()
 {
+	
+	lr_start_transaction("02_MAIN_DeletingTickets");
+	
 	web_reg_save_param_regexp(
 	    "ParamName=userSession", 
 	    "RegExp=name=\"userSession\" value=\"([^\"]+)\"/>",
@@ -117,6 +120,7 @@ if (Tickets != 0){
 		"Mode=HTML", 
 		LAST);
 	lr_end_transaction("Logout",LR_AUTO);
+	lr_end_transaction("02_MAIN_DeletingTickets",LR_AUTO);
 }
 
 else
@@ -137,7 +141,9 @@ else
 		"Mode=HTML", 
 		LAST);
 	lr_end_transaction("Logout",LR_AUTO);
+	lr_end_transaction("02_MAIN_DeletingTickets",LR_AUTO);
 }
+
 
 
 // На заметку для себя

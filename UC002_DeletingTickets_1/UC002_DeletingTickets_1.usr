@@ -52,7 +52,7 @@ vuser_init=cci
 Action=cci
 vuser_end=cci
 [TransactionsOrder]
-Order="OpenSite__*delimiter*__Login__*delimiter*__Click_Itinerary__*delimiter*__Tickets_Remove__*delimiter*__Logout__*delimiter*__Logout"
+Order="OpenSite__*delimiter*__Login__*delimiter*__Click_Itinerary__*delimiter*__Tickets_Remove__*delimiter*__Logout__*delimiter*__Logout__*delimiter*__02_MAIN_DeletingTickets"
 [StateManagement]
 LastReplayStatus=1
 [ActiveReplay]
@@ -64,3 +64,4 @@ Login=
 Click_Itinerary=
 Tickets_Remove=
 Logout=
+02_MAIN_DeletingTickets=

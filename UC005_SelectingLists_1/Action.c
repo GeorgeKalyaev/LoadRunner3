@@ -1,7 +1,7 @@
 Action()
 {
 
-	lr_start_transaction("MAIN_SelectingList_1");
+	lr_start_transaction("05_MAIN_SelectingList");
 	
 	web_reg_save_param_regexp(
 	    "ParamName=userSession", 
@@ -122,7 +122,7 @@ Action()
 		LAST);
 
 	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("MAIN_SelectingList_1",LR_AUTO);
+	lr_end_transaction("05_MAIN_SelectingList",LR_AUTO);
 
 	return 0;
 }

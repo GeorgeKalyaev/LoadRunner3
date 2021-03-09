@@ -1,7 +1,7 @@
 Action()
 {
 
-	lr_start_transaction("MAIN_LoginAndLogout_1");
+	lr_start_transaction("04_MAIN_LoginAndLogout");
 	
 	
 	web_reg_save_param_regexp(
@@ -68,7 +68,7 @@ Action()
 		LAST);
 
 	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("MAIN_LoginAndLogout_1",LR_AUTO);
+	lr_end_transaction("04_MAIN_LoginAndLogout",LR_AUTO);
 	
 	return 0;
 }
