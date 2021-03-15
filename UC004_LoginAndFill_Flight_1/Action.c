@@ -9,9 +9,9 @@ Action()
  	//lr_output_message("depart date is %s", lr_eval_string("{departD}")); 
  	
  	lr_save_datetime("%m/%d/%Y", DATE_NOW + (ONE_DAY*randNumber) + (ONE_DAY*2), "returnD");
- 	//lr_output_message("return date is %s", lr_eval_string("{returnD}"));
+ 	//lr_output_message("return date is %s", lr_eval_string("{returnD}"));1
 	
- 	lr_start_transaction(tr_main = "MAIN_BuyTicket");
+ 	lr_start_transaction(tr_main = "MAIN_LoginAndFill_Flight");
  	
 	web_reg_save_param_regexp(
 	    "ParamName=userSession", 
@@ -142,81 +142,7 @@ Action()
 
 	lr_end_transaction("Fill_Flight",LR_AUTO);
 
-	lr_think_time(3);
-
-	lr_start_transaction(tr_name = "Choose_Flight"); // Выбрать доступный рейс, нажать кнопку «Continue»
-
-	lr_save_string(lr_paramarr_random("outboundFlight"),"outboundFlight");
-	
-	web_reg_find("Text=Flight Reservation", LAST);
-	
-	status = web_submit_data("reservations.pl_2", 
-		"Action={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
-		"Method=POST", 
-		"TargetFrame=", 
-		"RecContentType=text/html", 
-		"Referer={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
-		"Snapshot=t5.inf", 
-		"Mode=HTML", 
-		ITEMDATA, 
-		"Name=outboundFlight", "Value={outboundFlight}", ENDITEM, 
-		"Name=numPassengers", "Value=1", ENDITEM, 
-		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=seatType", "Value={seatType}", ENDITEM, 
-		"Name=seatPref", "Value={seatPref}", ENDITEM, 
-		"Name=reserveFlights.x", "Value=23", ENDITEM, 
-		"Name=reserveFlights.y", "Value=5", ENDITEM, 
-		LAST);
-	Check(status, tr_name);
-
-	lr_end_transaction("Choose_Flight",LR_AUTO);
-
-	lr_think_time(3);
- 
-	lr_start_transaction(tr_name = "Fill_Payment_Info"); // Заполнить необходимые данные для платежа, нажать кнопку «Continue»
-
- 	web_reg_find("Text=<b>{UserName}{LastName}'s Flight Invoice</b>", LAST);
- 
-	status = web_submit_data("reservations.pl_3", 
-		"Action={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
-		"Method=POST", 
-		"TargetFrame=", 
-		"RecContentType=text/html", 
-		"Referer={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
-		"Snapshot=t6.inf", 
-		"Mode=HTML", 
-		ITEMDATA, 
-		"Name=firstName", "Value={UserName}", ENDITEM, 
-		"Name=lastName", "Value={LastName}", ENDITEM, 
-		"Name=address1", "Value={Street}", ENDITEM, 
-		"Name=address2", "Value={depart}", ENDITEM, 
-		"Name=pass1", "Value= {UserName} {LastName}", ENDITEM, 
-		"Name=creditCard", "Value={CreditCard}", ENDITEM, 
-		"Name=expDate", "Value={expDate}", ENDITEM, 
-		"Name=oldCCOption", "Value=", ENDITEM, 
-		"Name=numPassengers", "Value=1", ENDITEM, 
-		"Name=seatType", "Value={seatType}", ENDITEM, 
-		"Name=seatPref", "Value={seatPref}", ENDITEM, 
-		"Name=outboundFlight", "Value={outboundFlight}", ENDITEM, 
-		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=returnFlight", "Value=", ENDITEM, 
-		"Name=JSFormSubmit", "Value=off", ENDITEM, 
-		"Name=.cgifields", "Value=saveCC", ENDITEM, 
-		"Name=buyFlights.x", "Value=48", ENDITEM, 
-		"Name=buyFlights.y", "Value=14", ENDITEM, 
-		LAST);
-	Check(status, tr_name);
-
-	lr_end_transaction("Fill_Payment_Info",LR_AUTO);
-
-	lr_think_time(3);
-
-	lr_start_transaction(tr_name = "Logout"); // Выполнить выход из системы, нажать кнопку «Continue»
-
-	Logout();
-
-	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("MAIN_BuyTicket",LR_AUTO);
+	lr_end_transaction("MAIN_LoginAndFill_Flight",LR_AUTO);
 	
 	return 0;
 }

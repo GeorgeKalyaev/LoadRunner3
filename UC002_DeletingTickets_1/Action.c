@@ -1,7 +1,7 @@
 Action()
 {
 	
-	lr_start_transaction("02_MAIN_DeletingTickets");
+	lr_start_transaction("MAIN_DeletingTickets");
 	
 	web_reg_save_param_regexp(
 	    "ParamName=userSession", 
@@ -70,6 +70,21 @@ Action()
 		"IgnoreRedirections=No",
 		"RequestUrl=*/itinerary.pl*",
 		LAST);
+		// <input type="hidden" name="flightID" value="22619029-829-RA"  />
+		
+//		web_reg_save_param_ex(
+//		"ParamName=kol_tik", 
+//	    "LB/IC=<input type=\"hidden\" name=\"flightID\" value=\"",
+//	    "RB/IC=\" >",
+//	    "Ordinal=all",
+//		LAST);
+	/*	
+	kol_tik_1	0-46-&#10;"  />
+  </TD>
+  <TD width="45%" valign="top">
+      <b>&nbsp;&nbsp;A Coach class ticket for :</b><br/>
+      <center>	
+*/
 
 	web_url("Itinerary Button", 
 		"URL=http://192.168.26.1:1080/cgi-bin/welcome.pl?page=itinerary", 
@@ -120,7 +135,7 @@ if (Tickets != 0){
 		"Mode=HTML", 
 		LAST);
 	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("02_MAIN_DeletingTickets",LR_AUTO);
+	lr_end_transaction("MAIN_DeletingTickets",LR_AUTO);
 }
 
 else
@@ -141,7 +156,7 @@ else
 		"Mode=HTML", 
 		LAST);
 	lr_end_transaction("Logout",LR_AUTO);
-	lr_end_transaction("02_MAIN_DeletingTickets",LR_AUTO);
+	lr_end_transaction("MAIN_DeletingTickets",LR_AUTO);
 }
 
 

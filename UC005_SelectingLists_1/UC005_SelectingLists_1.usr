@@ -26,6 +26,7 @@ ScriptLocale=ru-RU
 [Actions]
 vuser_init=vuser_init.c
 Action=Action.c
+Extra=Extra.c
 vuser_end=vuser_end.c
 [RunLogicFiles]
 Default Profile=default.usp
@@ -38,31 +39,29 @@ globals.h=
 [Modified Actions]
 vuser_init=0
 Action=1
+Extra=1
 vuser_end=0
 [Recorded Actions]
 vuser_init=0
 Action=1
+Extra=0
 vuser_end=0
 [Replayed Actions]
 vuser_init=1
 Action=1
+Extra=1
 vuser_end=1
 [Interpreters]
 vuser_init=cci
 Action=cci
+Extra=cci
 vuser_end=cci
 [TransactionsOrder]
-Order="05_MAIN_SelectingList__*delimiter*__OpenSite__*delimiter*__Login__*delimiter*__Click_Flights__*delimiter*__Click_Itinerary__*delimiter*__Click_Home__*delimiter*__Logout"
+Order="_UC005_SelectingLists_Relogin"
 [StateManagement]
 LastReplayStatus=1
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1
 [Transactions]
-05_MAIN_SelectingList=
-OpenSite=
-Login=
-Click_Flights=
-Click_Itinerary=
-Click_Home=
-Logout=
+_UC005_SelectingLists_Relogin=
