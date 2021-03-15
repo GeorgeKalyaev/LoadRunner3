@@ -100,47 +100,47 @@ Action()
 
 	lr_end_transaction("Click_Flights",LR_AUTO);
 
-	lr_think_time(3);
-
-	lr_start_transaction(tr_name = "Fill_Flight"); // Заполнить поля для поиска рейс, нажать кнопку «Continue»
-
-	
-	web_reg_save_param_regexp(
-	    "ParamName=outboundFlight", 
-	    "RegExp=name=\"outboundFlight\" value=\"([^\"]+)\"",
-	    "Ordinal=ALL",
-		LAST);
-	
-	web_reg_find("Text=Flight departing from <B>{depart}</B> to <B>{arrive}</B> on <B>{departD}</B>", LAST);
-
-	status = web_submit_data("reservations.pl", 
-		"Action={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
-		"Method=POST", 
-		"TargetFrame=", 
-		"RecContentType=text/html", 
-		"Referer={protocol}://{host}:{port}/cgi-bin/reservations.pl?page=welcome", 
-		"Snapshot=t4.inf", 
-		"Mode=HTML", 
-		ITEMDATA, 
-		"Name=advanceDiscount", "Value=0", ENDITEM, 
-		"Name=depart", "Value={depart}", ENDITEM, 
-		//"Name=departDate", "Value=02/28/2021", ENDITEM,
-		"Name=departDate", "Value={departD}", ENDITEM,
-		"Name=arrive", "Value={arrive}", ENDITEM, 
-		//"Name=returnDate", "Value=03/01/2021", ENDITEM,
-		"Name=returnDate", "Value={returnD}", ENDITEM,
-		"Name=numPassengers", "Value=1", ENDITEM, 
-		"Name=seatPref", "Value={seatPref}", ENDITEM, 
-		"Name=seatType", "Value={seatType}", ENDITEM, 
-		"Name=.cgifields", "Value=roundtrip", ENDITEM, 
-		"Name=.cgifields", "Value=seatType", ENDITEM, 
-		"Name=.cgifields", "Value=seatPref", ENDITEM, 
-		"Name=findFlights.x", "Value=62", ENDITEM, 
-		"Name=findFlights.y", "Value=7", ENDITEM, 
-		LAST);
-	Check(status, tr_name);
-
-	lr_end_transaction("Fill_Flight",LR_AUTO);
+//	lr_think_time(3);
+//
+//	lr_start_transaction(tr_name = "Fill_Flight"); // Заполнить поля для поиска рейс, нажать кнопку «Continue»
+//
+//	
+//	web_reg_save_param_regexp(
+//	    "ParamName=outboundFlight", 
+//	    "RegExp=name=\"outboundFlight\" value=\"([^\"]+)\"",
+//	    "Ordinal=ALL",
+//		LAST);
+//	
+//	web_reg_find("Text=Flight departing from <B>{depart}</B> to <B>{arrive}</B> on <B>{departD}</B>", LAST);
+//
+//	status = web_submit_data("reservations.pl", 
+//		"Action={protocol}://{host}:{port}/cgi-bin/reservations.pl", 
+//		"Method=POST", 
+//		"TargetFrame=", 
+//		"RecContentType=text/html", 
+//		"Referer={protocol}://{host}:{port}/cgi-bin/reservations.pl?page=welcome", 
+//		"Snapshot=t4.inf", 
+//		"Mode=HTML", 
+//		ITEMDATA, 
+//		"Name=advanceDiscount", "Value=0", ENDITEM, 
+//		"Name=depart", "Value={depart}", ENDITEM, 
+//		//"Name=departDate", "Value=02/28/2021", ENDITEM,
+//		"Name=departDate", "Value={departD}", ENDITEM,
+//		"Name=arrive", "Value={arrive}", ENDITEM, 
+//		//"Name=returnDate", "Value=03/01/2021", ENDITEM,
+//		"Name=returnDate", "Value={returnD}", ENDITEM,
+//		"Name=numPassengers", "Value=1", ENDITEM, 
+//		"Name=seatPref", "Value={seatPref}", ENDITEM, 
+//		"Name=seatType", "Value={seatType}", ENDITEM, 
+//		"Name=.cgifields", "Value=roundtrip", ENDITEM, 
+//		"Name=.cgifields", "Value=seatType", ENDITEM, 
+//		"Name=.cgifields", "Value=seatPref", ENDITEM, 
+//		"Name=findFlights.x", "Value=62", ENDITEM, 
+//		"Name=findFlights.y", "Value=7", ENDITEM, 
+//		LAST);
+//	Check(status, tr_name);
+//
+//	lr_end_transaction("Fill_Flight",LR_AUTO);
 
 	lr_end_transaction("MAIN_LoginAndFill_Flight",LR_AUTO);
 	

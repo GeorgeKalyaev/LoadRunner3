@@ -57,9 +57,13 @@ Action=cci
 Extra=cci
 vuser_end=cci
 [TransactionsOrder]
-Order=
+Order="Continue__*delimiter*__Click_Flights__*delimiter*__Fill_Flight"
 [StateManagement]
 LastReplayStatus=1
 [ActiveReplay]
 LastReplayedRunName=result1
 ActiveRunName=result1
+[Transactions]
+Continue=
+Click_Flights=
+Fill_Flight=
